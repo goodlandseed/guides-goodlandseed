@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planting Calendar — Good Land Seed Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#3a6b35; --terra:#c4664a; --cream:#f5f0e8; --gold:#c9a84c; --dark:#2a2a2a;
+  --flower:#d4a0b0; --herb:#5a9e8f; --tomato:#c4664a; --bean:#e68a2e; --root:#c9a84c;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);line-height:1.5;}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:600;color:var(--green);}
+header{background:var(--green);color:var(--cream);padding:24px 20px;text-align:center;}
+header h1{color:var(--cream);font-size:2.2rem;}
+header p{font-size:.95rem;opacity:.9;margin-top:6px;}
+.wrap{max-width:1300px;margin:0 auto;padding:20px;}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:18px 0;background:#fff;padding:14px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.controls label{font-size:.85rem;font-weight:500;color:var(--dark);}
+.controls input,.controls select{font-family:inherit;padding:7px 10px;border:1px solid #d9d0c2;border-radius:6px;font-size:.85rem;background:var(--cream);}
+.controls button{font-family:inherit;background:var(--terra);color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:500;}
+.controls button:hover{background:#a8543b;}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0;font-size:.8rem;align-items:center;}
+.legend span.dot{display:inline-block;width:14px;height:14px;border-radius:3px;margin-right:5px;vertical-align:middle;}
+.phase-key{display:flex;gap:18px;flex-wrap:wrap;font-size:.78rem;margin:8px 0 18px;color:#555;}
+.phase-key b{font-weight:600;}
+
+/* Gantt */
+.gantt{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.07);overflow:hidden;}
+.gantt-scroll{overflow-x:auto;}
+.gantt-inner{min-width:880px;}
+.month-row{display:grid;grid-template-columns:200px 1fr;border-bottom:2px solid var(--green);}
+.month-label-head{padding:10px;font-weight:600;color:var(--green);font-family:'Playfair Display',serif;}
+.months{display:grid;grid-template-columns:repeat(12,1fr);position:relative;}
+.month-cell{text-align:center;padding:8px 2px;font-size:.72rem;font-weight:600;border-left:1px solid #eee5d6;color:#666;}
+.month-cell.current{background:var(--gold);color:#fff;border-radius:4px 4px 0 0;}
+
+.seed-row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid #eee5d6;cursor:pointer;transition:background .15s;}
+.seed-row:hover{background:#faf6ee;}
+.seed-name{padding:10px;display:flex;flex-direction:column;gap:2px;}
+.seed-name strong{font-size:.9rem;}
+.seed-name em{font-size:.72rem;color:#888;font-style:italic;}
+.cat-tag{font-size:.65rem;text-transform:uppercase;letter-spacing:.5px;padding:1px 6px;border-radius:8px;color:#fff;display:inline-block;width:fit-content;margin-top:2px;}
+.track{position:relative;height:46px;background:repeating-linear-gradient(to right,transparent,transparent calc(100%/12 - 1px),#eee5d6 calc(100%/12 - 1px),#eee5d6 calc(100%/12));}
+.bar{position:absolute;height:12px;border-radius:6px;top:6px;font-size:0;}
+.bar.indoor{top:6px;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.4),rgba(255,255,255,.4) 3px,transparent 3px,transparent 6px);}
+.bar.sow{top:20px;}
+.bar.harvest{top:34px;opacity:.55;}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--terra);z-index:5;}
+.today-line::after{content:'TODAY';position:absolute;top:-2px;left:3px;font-size:.55rem;color:var(--terra);font-weight:700;white-space:nowrap;}
+.frost-line{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed #6b8cae;z-index:4;}
+.frost-line span{position:absolute;bottom:-2px;left:3px;font-size:.55rem;color:#6b8cae;font-weight:700;white-space:nowrap;}
+
+.detail{display:none;grid-column:1/3;background:#faf6ee;padding:16px 20px;border-bottom:1px solid #eee5d6;}
+.detail.open{display:block;}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px;}
+.detail-grid div{font-size:.82rem;}
+.detail-grid b{color:var(--green);display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;}
+.tips{font-size:.85rem;}
+.tips b{color:var(--terra);}
+
+/* Add form */
+.addsec{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.07);padding:20px;margin-top:24px;}
+.addsec h2{margin-bottom:12px;}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.form-grid label{display:flex;flex-direction:column;gap:4px;font-size:.78rem;font-weight:500;}
+.form-grid input,.form-grid select,.form-grid textarea{font-family:inherit;padding:7px;border:1px solid #d9d0c2;border-radius:6px;font-size:.82rem;background:var(--cream);}
+.research{margin-bottom:16px;}
+.research textarea{width:100%;min-height:90px;font-family:inherit;padding:10px;border:1px solid #d9d0c2;border-radius:6px;background:var(--cream);font-size:.85rem;}
+.research button{margin-top:8px;background:var(--green);}
+.research button:hover{background:#2e5429;}
+.fullw{grid-column:1/-1;}
+.addsec .submit{margin-top:14px;background:var(--terra);}
+.del-btn{background:#a8543b;font-size:.72rem;padding:4px 10px;margin-top:8px;}
+footer{text-align:center;padding:24px;font-size:.8rem;color:#888;}
+
+@media print{
+  .controls,.addsec,footer,.research{display:none!important;}
+  .detail{display:block!important;}
+  body{background:#fff;}
+  .gantt-scroll{overflow:visible;}
+}
+@media(max-width:600px){
+  .month-row,.seed-row{grid-template-columns:130px 1fr;}
+  .seed-name{padding:6px;}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Year-Round Planting Calendar</h1>
+  <p>Good Land Seed Co. &middot; Nampa, ID &middot; USDA Zone 6b–7a &middot; Last Frost ~May 8–15 &middot; First Frost ~Oct 1–10</p>
+</header>
+
+<div class="wrap">
+  <div class="controls">
+    <label>Jump to:
+      <select id="jumpMonth"><option value="">— Month —</option></select>
+    </label>
+    <label>Search:
+      <input type="text" id="search" placeholder="name or botanical...">
+    </label>
+    <label>Category:
+      <select id="catFilter">
+        <option value="">All</option>
+        <option>Flower</option><option>Herb</option><option>Bean</option>
+        <option>Root Veg</option><option>Tomato</option>
+      </select>
+    </label>
+    <button onclick="window.print()">🖨 Print View</button>
+    <button onclick="document.getElementById('addsec').scrollIntoView({behavior:'smooth'})">+ Add Variety</button>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:var(--flower)"></span>Flowers</span>
+    <span><span class="dot" style="background:var(--herb)"></span>Herbs</span>
+    <span><span class="dot" style="background:var(--tomato)"></span>Tomatoes</span>
+    <span><span class="dot" style="background:var(--bean)"></span>Beans</span>
+    <span><span class="dot" style="background:var(--root)"></span>Root Veg</span>
+  </div>
+  <div class="phase-key">
+    <span><b>Striped bar</b> = Indoor seed starting</span>
+    <span><b>Solid bar (middle)</b> = Direct sow / Transplant</span>
+    <span><b>Faded bar (bottom)</b> = Harvest window</span>
+  </div>
+
+  <div class="gantt">
+    <div class="gantt-scroll">
+      <div class="gantt-inner">
+        <div class="month-row">
+          <div class="month-label-head">Seed Variety</div>
+          <div class="months" id="monthHead"></div>
+        </div>
+        <div id="rows"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="addsec" id="addsec">
+    <h2>Add a Variety</h2>
+    <div class="research">
+      <label style="font-size:.85rem;font-weight:600;">Research from Web (paste text & auto-fill):</label>
+      <textarea id="researchBox" placeholder="Paste research text. Recognizes lines like: Botanical name: ..., Depth: 1/4in, Spacing: 12in, Germ: 7-14d, Harvest: 60-80d, Sun: Full Sun, Indoor Mar 15-Apr 1, Direct sow Apr 15-Jun 1, Harvest Jun 15-Oct 15, Tips: ..."></textarea>
+      <button onclick="parseResearch()">⤵ Auto-Parse to Form</button>
+    </div>
+    <form id="addForm" onsubmit="addVariety(event)">
+      <div class="form-grid">
+        <label>Name *<input required name="name"></label>
+        <label>Category
+          <select name="category">
+            <option>Flower</option><option>Herb</option><option>Bean</option>
+            <option>Root Veg</option><option>Tomato</option>
+          </select>
+        </label>
+        <label>Botanical Name<input name="botanical"></label>
+        <label>Indoor Start (e.g. Mar 15-Apr 1)<input name="indoor" placeholder="optional"></label>
+        <label>Direct Sow/Transplant (e.g. Apr 15-Jun 1)<input name="sow"></label>
+        <label>Harvest (e.g. Jun 15-Oct 15)<input name="harvest"></label>
+        <label>Depth<input name="depth" placeholder="1/4in"></label>
+        <label>Spacing<input name="spacing" placeholder="12in"></label>
+        <label>Sun<input name="sun" placeholder="Full Sun"></label>
+        <label>Germination<input name="germ" placeholder="7-14d"></label>
+        <label>Days to Harvest<input name="days" placeholder="60-80d"></label>
+        <label class="fullw">Tips<textarea name="tips" style="min-height:50px;"></textarea></label>
+        <label class="fullw">Companions<input name="companions"></label>
+      </div>
+      <button type="submit" class="submit">Add to Calendar</button>
+    </form>
+  </div>
+</div>
+
+<footer>🌱 Good Land Seed Co. — Grow good. Live well.</footer>
+
+<script>
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const CATCOLOR={'Flower':'var(--flower)','Herb':'var(--herb)','Bean':'var(--bean)','Root Veg':'var(--root)','Tomato':'var(--tomato)','Flower/Herb':'var(--flower)'};
+
+const DEFAULT=[
+ {name:'Calendula',category:'Flower',botanical:'Calendula officinalis',sow:'Apr 15-Jun 1',harvest:'Jun 15-Oct 15',depth:'1/4in',spacing:'12in',sun:'Full Sun',germ:'7-14d',days:'60-80d',tips:'Deadhead for continuous blooms; edible petals.',companions:'Tomatoes, beans, herbs'},
+ {name:'Morning Glory',category:'Flower',botanical:'Ipomoea purpurea',sow:'May 1-Jun 1',harvest:'Jul 1-Oct 1',depth:'1/4in',spacing:'12in',sun:'Full Sun',germ:'7-14d',days:'60-80d',tips:'Soak seeds 24hr before sowing; needs a trellis.',companions:'Corn, sunflowers'},
+ {name:'Borage',category:'Flower/Herb',botanical:'Borago officinalis',sow:'Apr 15-Jul 1',harvest:'Jun 15-Oct 1',depth:'1/4in',spacing:'12in',sun:'Full Sun',germ:'7-14d',days:'60-80d',tips:'Self-seeds readily; edible blue flowers attract pollinators.',companions:'Tomatoes, squash, strawberries'},
+ {name:'Scarlet Runner Bean',category:'Bean',botanical:'Phaseolus coccineus',sow:'May 15-Jul 1',harvest:'Jul 20-Sep 30',depth:'1in',spacing:'6in',sun:'Full Sun',germ:'7-10d',days:'55-70d',tips:'Hummingbird magnet; trellis 8-10ft tall.',companions:'Corn, squash, carrots'},
+ {name:'Dragon Tongue Bean',category:'Bean',botanical:'Phaseolus vulgaris',sow:'May 15-Jul 15',harvest:'Jul 15-Sep 30',depth:'1in',spacing:'6in',sun:'Full Sun',germ:'7-10d',days:'55-70d',tips:'Purple streaks vanish when cooked; bush type.',companions:'Cucumbers, corn, marigold'},
+ {name:'Anise Hyssop',category:'Herb',botanical:'Agastache foeniculum',indoor:'Mar 15-Apr 1',sow:'May 15-May 15',harvest:'Jul 1-Oct 1',depth:'1/4in',spacing:'12in',sun:'Full Sun',germ:'7-14d',days:'60-80d',tips:'Licorice-flavored tea; perennial. Transplant May 15.',companions:'Most veg, attracts pollinators'},
+ {name:'Lemon Balm',category:'Herb',botanical:'Melissa officinalis',indoor:'Mar 15-Apr 1',sow:'May 15-May 15',harvest:'Jun 15-Oct 1',depth:'1/4in',spacing:'12in',sun:'Full Sun',germ:'7-14d',days:'60-80d',tips:'Calming tea; contain in a pot, it spreads. Perennial.',companions:'Tomatoes, squash'},
+ {name:'Chioggia Beet',category:'Root Veg',botanical:'Beta vulgaris (Chioggia)',sow:'Apr 1-Aug 1',harvest:'Jun 1-Oct 15',depth:'1/2in',spacing:'4in',sun:'Full-Part Sun',germ:'5-10d',days:'55-65d',tips:'Succession sow every 3 weeks. Candy-stripe rings best raw.',companions:'Onions, lettuce, brassicas'},
+ {name:'Echinacea Purpurea',category:'Herb',botanical:'Echinacea purpurea',indoor:'Mar 1-Apr 1',sow:'May 15-May 15',harvest:'Jul 15-Oct 1',depth:'1/4in',spacing:'12in',sun:'Full Sun',germ:'7-14d',days:'60-80d',tips:'Medicinal; drought-tolerant perennial. Blooms 2nd year.',companions:'Pollinator plantings'},
+ {name:'Cherokee Purple',category:'Tomato',botanical:'Solanum lycopersicum',indoor:'Mar 15-Apr 1',sow:'May 15-Jun 1',harvest:'Aug 1-Oct 1',depth:'1/4in',spacing:'24in',sun:'Full Sun',germ:'7-14d',days:'75-90d',tips:'Dusky pink-red, smoky flavor. Stake or cage.',companions:'Basil, calendula, borage'},
+ {name:'Brandywine',category:'Tomato',botanical:'Solanum lycopersicum',indoor:'Mar 15-Apr 1',sow:'May 15-Jun 1',harvest:'Aug 1-Oct 1',depth:'1/4in',spacing:'24in',sun:'Full Sun',germ:'7-14d',days:'75-90d',tips:'Gold standard flavor; potato-leaf variety.',companions:'Basil, marigold, borage'},
+ {name:'Black Krim',category:'Tomato',botanical:'Solanum lycopersicum',indoor:'Mar 15-Apr 1',sow:'May 15-Jun 1',harvest:'Aug 1-Oct 1',depth:'1/4in',spacing:'24in',sun:'Full Sun',germ:'7-14d',days:'75-90d',tips:'Burgundy from Crimea; smoky, heat-tolerant.',companions:'Basil, calendula'},
+ {name:'San Marzano',category:'Tomato',botanical:'Solanum lycopersicum',indoor:'Mar 15-Apr 1',sow:'May 15-Jun 1',harvest:'Aug 1-Oct 1',depth:'1/4in',spacing:'24in',sun:'Full Sun',germ:'7-14d',days:'75-90d',tips:'Classic paste tomato; meaty with few seeds.',companions:'Basil, parsley, marigold'}
+];
+
+let seeds=[];
+function load(){
+  const saved=localStorage.getItem('glsc_custom');
+  const custom=saved?JSON.parse(saved):[];
+  seeds=[...DEFAULT,...custom];
+}
+function saveCustom(arr){localStorage.setItem('glsc_custom',JSON.stringify(arr));}
+function getCustom(){const s=localStorage.getItem('glsc_custom');return s?JSON.parse(s):[];}
+
+// date parsing -> fraction of year (0..12)
+function dateToPos(str){
+  // "Apr 15" -> month index + day fraction
+  const m=str.trim().match(/([A-Za-z]+)\s*(\d+)?/);
+  if(!m)return null;
+  const mi=MONTHS.findIndex(mo=>mo.toLowerCase()===m[1].toLowerCase().slice(0,3));
+  if(mi<0)return null;
+  const day=m[2]?parseInt(m[2]):1;
+  return mi+(day-1)/31;
+}
+function rangeToPct(range){
+  if(!range)return null;
+  const parts=range.split('-');
+  if(parts.length<2)return null;
+  let start=dateToPos(parts[0]);
+  let end=dateToPos(parts[1]);
+  if(start==null||end==null)return null;
+  if(end<=start)end=start+0.4; // single point widen
+  return {left:(start/12)*100,width:((end-start)/12)*100};
+}
+
+const now=new Date();
+const curMonth=now.getMonth();
+const todayPos=(curMonth+(now.getDate()-1)/31)/12*100;
+
+function render(){
+  // month head
+  const mh=document.getElementById('monthHead');
+  mh.innerHTML=MONTHS.map((m,i)=>`<div class="month-cell ${i===curMonth?'current':''}">${m}</div>`).join('');
+  // today line on head
+  mh.insertAdjacentHTML('beforeend',`<div class="today-line" style="left:${todayPos}%"></div>`);
+
+  const search=document.getElementById('search').value.toLowerCase();
+  const cat=document.getElementById('catFilter').value;
+  const container=document.getElementById('rows');
+  container.innerHTML='';
+
+  seeds.forEach((s,idx)=>{
+    if(cat&&!s.category.includes(cat))return;
+    if(search&&!(s.name.toLowerCase().includes(search)||(s.botanical||'').toLowerCase().includes(search)))return;
+    const color=CATCOLOR[s.category]||'var(--green)';
+    let bars='';
+    const indoor=rangeToPct(s.indoor);
+    const sow=rangeToPct(s.sow);
+    const harv=rangeToPct(s.harvest);
+    if(indoor)bars+=`<div class="bar indoor" style="left:${indoor.left}%;width:${indoor.width}%;background:${color}"></div>`;
+    if(sow)bars+=`<div class="bar sow" style="left:${sow.left}%;width:${sow.width}%;background:${color}"></div>`;
+    if(harv)bars+=`<div class="bar harvest" style="left:${harv.left}%;width:${harv.width}%;background:${color}"></div>`;
+
+    // frost lines (May 11 = ~4.32, Oct 5 = ~9.13)
+    const lastFrost=(4+(11-1)/31)/12*100;
+    const firstFrost=(9+(5-1)/31)/12*100;
+
+    const isCustom=idx>=DEFAULT.length;
+    const row=document.createElement('div');
+    row.innerHTML=`
+      <div class="seed-row" onclick="toggle(${idx})">
+        <div class="seed-name">
+          <strong>${s.name}</strong>
+          <em>${s.botanical||''}</em>
+          <span class="cat-tag" style="background:${color}">${s.category}</span>
+        </div>
+        <div class="track">
+          ${bars}
+          <div class="frost-line" style="left:${lastFrost}%"><span>Last Frost</span></div>
+          <div class="frost-line" style="left:${firstFrost}%"><span>1st Frost</span></div>
+          <div class="today-line" style="left:${todayPos}%"></div>
+        </div>
+      </div>
+      <div class="detail" id="d${idx}">
+        <div class="detail-grid">
+          <div><b>Botanical</b>${s.botanical||'—'}</div>
+          <div><b>Depth</b>${s.depth||'—'}</div>
+          <div><b>Spacing</b>${s.spacing||'—'}</div>
+          <div><b>Germination</b>${s.germ||'—'}</div>
+          <div><b>Days to Harvest</b>${s.days||'—'}</div>
+          <div><b>Sun</b>${s.sun||'—'}</div>
+          ${s.indoor?`<div><b>Indoor Start</b>${s.indoor}</div>`:''}
+          <div><b>Sow/Transplant</b>${s.sow||'—'}</div>
+          <div><b>Harvest</b>${s.harvest||'—'}</div>
+        </div>
+        <div class="tips"><b>Tips:</b> ${s.tips||'—'}</div>
+        <div class="tips"><b>Companions:</b> ${s.companions||'—'}</div>
+        ${isCustom?`<button class="del-btn" onclick="delVariety(event,${idx-DEFAULT.length})">🗑 Delete</button>`:''}
+      </div>`;
+    container.appendChild(row);
+  });
+}
+
+function toggle(idx){
+  const d=document.getElementById('d'+idx);
+  if(d)d.classList.toggle('open');
+}
+
+function delVariety(e,ci){
+  e.stopPropagation();
+  const c=getCustom();c.splice(ci,1);saveCustom(c);load();render();
+}
+
+function addVariety(e){
+  e.preventDefault();
+  const f=e.target;
+  const obj={};
+  ['name','category','botanical','indoor','sow','harvest','depth','spacing','sun','germ','days','tips','companions'].forEach(k=>obj[k]=f[k].value.trim());
+  const c=getCustom();c.push(obj);saveCustom(c);load();render();
+  f.reset();
+  alert('Added "'+obj.name+'" to your calendar!');
+}
+
+function parseResearch(){
+  const t=document.getElementById('researchBox').value;
+  const f=document.getElementById('addForm');
+  const find=(re)=>{const m=t.match(re);return m?m[1].trim():'';};
+  const bot=find(/botanical[^:]*:\s*([^\n,]+)/i);if(bot)f.botanical.value=bot;
+  const dep=find(/depth[^:]*:?\s*([\d\/]+\s*in)/i);if(dep)f.depth.value=dep;
+  const sp=find(/spacing[^:]*:?\s*([\d\/]+\s*in)/i);if(sp)f.spacing.value=sp;
+  const gm=find(/germ[^:]*:?\s*(\d+\s*-\s*\d+\s*d)/i);if(gm)f.germ.value=gm.replace(/\s/g,'');
+  const dh=find(/(?:days to )?harvest[^:]*:?\s*(\d+\s*-\s*\d+\s*d)/i);if(dh)f.days.value=dh.replace(/\s/g,'');
+  const sun=find(/sun[^:]*:?\s*(full[\w\s-]*sun|part[\w\s-]*)/i);if(sun)f.sun.value=sun;
+  const ind=find(/indoor[^:]*:?\s*([A-Za-z]+\s*\d+\s*-\s*[A-Za-z]*\s*\d+)/i);if(ind)f.indoor.value=ind;
+  const sow=find(/(?:direct sow|transplant|sow)[^:]*:?\s*([A-Za-z]+\s*\d+\s*-\s*[A-Za-z]*\s*\d+)/i);if(sow)f.sow.value=sow;
+  const harvD=find(/harvest[^:]*:?\s*([A-Za-z]{3,}\s*\d+\s*-\s*[A-Za-z]*\s*\d+)/i);if(harvD)f.harvest.value=harvD;
+  // tips
+  const tip=find(/tips?[^:]*:\s*([^\n]+)/i);if(tip)f.tips.value=tip;
+  const comp=find(/companions?[^:]*:\s*([^\n]+)/i);if(comp)f.companions.value=comp;
+  // name guess: first non-empty line
+  const firstLine=t.split('\n').map(l=>l.trim()).filter(Boolean)[0];
+  if(firstLine&&!f.name.value)f.name.value=firstLine.replace(/[:].*/,'').slice(0,40);
+  alert('Form auto-filled from research text. Review & adjust before adding.');
+}
+
+// jump month
+const jm=document.getElementById('jumpMonth');
+MONTHS.forEach((m,i)=>jm.add(new Option(m,i)));
+jm.onchange=()=>{
+  if(jm.value==='')return;
+  const scroll=document.querySelector('.gantt-scroll');
+  const w=document.querySelector('.gantt-inner').scrollWidth;
+  scroll.scrollLeft=(jm.value/12)*w*0.85;
+};
+document.getElementById('search').oninput=render;
+document.getElementById('catFilter').onchange=render;
+
+load();render();
+</script>
+</body>
+</html>TEST_MARKER_1781112700
