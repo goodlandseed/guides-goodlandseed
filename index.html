@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-57LY6JBNS2"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -12,225 +11,374 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Growing Guides | Good Land Seed Co.</title>
-<meta name="description" content="Pick the variety from your seed packet to access its complete growing guide — customized to your USDA hardiness zone.">
+<meta name="description" content="Pick the variety from your seed packet to access its complete growing guide, customized to your USDA hardiness zone.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --green:#3a6b35;--green-dark:#2d5529;--green-soft:#6a8d65;--gold:#c9a96e;
-    --cream:#faf8f3;--paper:#fff;--ink:#252420;--muted:#6b6760;--hair:#e2ddd2;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{font-family:'Lora',Georgia,serif;color:var(--ink);background:var(--cream);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:720px;margin:0 auto;padding:36px 22px 64px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Lato',sans-serif;color:#2a2a2a;background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
 
-  /* masthead */
-  .mast{text-align:center;border-bottom:1px solid var(--hair);padding-bottom:22px;margin-bottom:32px}
-  .mast .brand{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:600}
-  .mast .divider{width:80px;height:1px;background:var(--gold);margin:8px auto;position:relative}
-  .mast .divider::after{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%)}
-  .mast .co{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--green);font-weight:500}
+:root{
+  --green:#2C3A2A;
+  --terra:#c4664a;
+  --cream:#F9F6EF;
+  --gold:#C8A87A;
+  --wheat:#D4C49A;
+  --dark:#1A2219;
+  --green-dark:#1A2219;
+  --green-soft:#6a8d65;
+  --paper:#fff;
+  --ink:#252420;
+  --muted:#6b6760;
+  --hair:#e2ddd2;
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
 
-  /* lead */
-  .lead{text-align:center;max-width:520px;margin:0 auto 36px}
-  .lead h1{font-size:34px;font-weight:500;color:var(--green);line-height:1.15;margin:0 0 10px;letter-spacing:-.01em}
-  .lead p{color:var(--muted);font-size:16px;margin:0;font-style:italic}
-  .lead .shop-button{margin-top:22px}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 5vw;display:flex;align-items:center;justify-content:space-between;height:72px;transition:var(--transition);background:var(--cream);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgba(44,58,42,.1),0 2px 16px rgba(44,58,42,.04)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--green);letter-spacing:.01em;display:flex;align-items:center;gap:14px}
+.nav-logo-img{flex-shrink:0;width:auto;height:52px;object-fit:contain}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--dark);opacity:.8;transition:var(--transition)}
+.nav-links a:hover{opacity:1;color:var(--green)}
+.nav-cta{background:var(--terra);color:#fff;border:none;padding:.55rem 1.25rem;border-radius:999px;font-family:'Lato',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.04em;cursor:pointer;transition:var(--transition);display:inline-block}
+.nav-cta:hover{background:#b0553a;transform:translateY(-1px)}
+.nav-buy{background:var(--green);color:var(--cream);border:none;padding:.55rem 1.25rem;border-radius:999px;font-family:'Lato',sans-serif;font-size:.8rem;font-weight:500;letter-spacing:.04em;cursor:pointer;transition:var(--transition);display:inline-block}
+.nav-buy:hover{background:var(--green-dark);transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-toggle span{display:block;width:24px;height:2px;background:var(--dark);border-radius:2px;transition:var(--transition)}
+.nav-item-dropdown{position:relative}
+.nav-item-dropdown>a{display:flex;align-items:center;gap:.3rem;cursor:pointer}
+.nav-dd-arrow{width:10px;height:10px;transition:transform .22s;opacity:.5;flex-shrink:0}
+.nav-item-dropdown:hover .nav-dd-arrow{transform:rotate(180deg);opacity:1}
+.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);background:var(--cream);border:1px solid rgba(44,58,42,.12);border-radius:10px;box-shadow:0 8px 32px rgba(44,58,42,.13);min-width:248px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;list-style:none;padding:.45rem 0}
+.nav-dropdown::before{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:9px;height:9px;background:var(--cream);border-left:1px solid rgba(44,58,42,.12);border-top:1px solid rgba(44,58,42,.12)}
+.nav-item-dropdown:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-dropdown li a{display:block;padding:.6rem 1.2rem;font-size:.78rem;font-weight:500;letter-spacing:.04em;color:var(--dark);opacity:.8;border-left:2px solid transparent;transition:all .15s;text-transform:none;white-space:nowrap}
+.nav-dropdown li a:hover{opacity:1;color:var(--green);border-left-color:var(--green);background:rgba(44,58,42,.04)}
+@media(max-width:768px){
+  .nav-logo{font-size:1.1rem}
+  .nav-links,.nav-cta{display:none}
+  .nav-buy{font-size:.7rem;padding:.38rem .85rem;letter-spacing:.02em}
+  .nav-toggle{display:flex}
+}
 
-  /* shop button */
-  .shop-button{
-    display:inline-block;text-decoration:none;color:#fff;background:var(--green);
-    border-radius:4px;padding:18px 28px;font-family:'Lora',Georgia,serif;
-    font-size:22px;font-weight:700;line-height:1.1;letter-spacing:.01em;
-    box-shadow:0 10px 28px rgba(58,107,53,.18);transition:transform .16s ease,background .16s ease;
-  }
-  .shop-button:hover{transform:translateY(-2px);background:var(--green-dark)}
+/* PAGE */
+.page-wrap{padding-top:72px;min-height:100vh;background:var(--cream)}
 
-  /* category heading */
-  .group{margin-bottom:32px}
-  .group-head{
-    font-size:11px;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--green-soft);font-weight:600;
-    padding-bottom:8px;border-bottom:1px solid var(--hair);margin-bottom:12px;
-    display:flex;justify-content:space-between;align-items:baseline;
-  }
-  .group-head .count{font-size:10px;color:var(--muted);letter-spacing:.18em;font-weight:500}
+.page-header{text-align:center;padding:2.5rem 5vw 1.25rem}
+.page-header h1{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,3vw,2.4rem);font-weight:700;color:var(--green);margin-bottom:.35rem}
+.page-header p{font-family:'Lora',serif;font-size:.92rem;color:var(--muted);font-style:italic}
 
-  /* variety card */
-  .card{
-    display:block;background:var(--paper);border:1px solid var(--hair);
-    padding:16px 18px;margin-bottom:8px;text-decoration:none;color:var(--ink);
-    border-radius:2px;transition:all .14s ease;
-    position:relative;
-  }
-  .card:hover{border-color:var(--green-soft);transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.04)}
-  .card .name{font-size:21px;font-weight:600;color:var(--green);line-height:1.2;margin-bottom:2px;letter-spacing:-.005em}
-  .card .latin{font-style:italic;color:var(--muted);font-size:13.5px;margin-bottom:8px}
-  .card .desc{font-size:14.5px;line-height:1.55;color:var(--ink);margin:0}
-  .card .meta{
-    display:flex;gap:14px;margin-top:10px;
-    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-    color:var(--green-soft);font-weight:600;
-  }
-  .card .meta .dot{color:var(--gold)}
-  .card .arrow{
-    position:absolute;top:50%;right:18px;transform:translateY(-50%);
-    color:var(--green-soft);font-size:18px;transition:transform .14s ease;
-    font-family:'Lora',serif;
-  }
-  .card:hover .arrow{transform:translateY(-50%) translateX(3px);color:var(--green)}
+/* SEARCH */
+.search-wrap{max-width:520px;margin:1.4rem auto 0;padding:0 5vw}
+.search-inner{position:relative}
+.search-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;opacity:.45}
+.search-input{
+  width:100%;padding:.72rem 1rem .72rem 2.75rem;
+  font-family:'Lato',sans-serif;font-size:.95rem;
+  border:1px solid var(--hair);border-radius:999px;
+  background:#fff;color:var(--ink);
+  outline:none;transition:border-color .15s,box-shadow .15s;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.search-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(44,58,42,.08)}
+.search-input::placeholder{color:var(--muted);opacity:.6}
 
-  /* coming-soon state — non-clickable, muted */
-  .card.soon{cursor:default;opacity:.62}
-  .card.soon:hover{transform:none;box-shadow:none;border-color:var(--hair)}
-  .card.soon .arrow{display:none}
-  .card.soon .badge{
-    position:absolute;top:14px;right:18px;
-    font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--green-soft);font-weight:600;
-    background:var(--cream);padding:3px 8px;border:1px solid var(--hair);border-radius:2px;
-  }
+/* CATEGORY TABS */
+.cat-tabs{display:flex;justify-content:center;gap:.45rem;flex-wrap:wrap;padding:1.2rem 5vw .25rem}
+.cat-tab{
+  background:none;border:1px solid var(--hair);
+  padding:.35rem .95rem;border-radius:999px;
+  font-family:'Lato',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);cursor:pointer;transition:all .15s;
+}
+.cat-tab:hover{border-color:var(--green);color:var(--green)}
+.cat-tab.active{background:var(--green);border-color:var(--green);color:#fff}
 
-  /* footer */
-  footer{border-top:1px solid var(--hair);margin-top:48px;padding-top:24px;text-align:center;color:var(--muted);font-size:13px}
-  footer .url{color:var(--green);font-weight:500;letter-spacing:.02em}
-  footer .legal{font-size:11px;margin-top:10px;color:var(--muted);line-height:1.5}
+/* GUIDES GRID */
+.guides-section{max-width:1120px;margin:0 auto;padding:1.5rem 5vw 3rem}
 
-  @media (max-width:480px){
-    .wrap{padding:28px 18px 48px}
-    .lead h1{font-size:28px}
-    .card{padding:14px 16px}
-    .card .name{font-size:19px}
-    .card .arrow{right:14px}
-  }
+.cat-group{margin-bottom:1.75rem}
+.cat-group:last-of-type{margin-bottom:0}
+
+.cat-label{
+  font-family:'Lato',sans-serif;
+  font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--green-soft);font-weight:700;
+  padding-bottom:.45rem;border-bottom:1px solid var(--hair);
+  margin-bottom:.8rem;
+  display:flex;justify-content:space-between;align-items:baseline;
+}
+.cat-count{font-size:.62rem;color:var(--muted);letter-spacing:.15em;font-weight:500}
+
+.cards-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.6rem;
+}
+@media(max-width:860px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.cards-grid{grid-template-columns:1fr}}
+
+/* CARD */
+.card{
+  display:block;background:#fff;border:1px solid var(--hair);
+  padding:.95rem 1rem .85rem;text-decoration:none;color:var(--ink);
+  border-radius:6px;transition:all .14s ease;position:relative;
+}
+.card:hover{border-color:var(--green-soft);transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.07)}
+.card .name{font-family:'Lora',serif;font-size:.98rem;font-weight:600;color:var(--green);line-height:1.25;margin-bottom:.12rem}
+.card .latin{font-family:'Lora',serif;font-style:italic;color:var(--muted);font-size:.75rem;margin-bottom:.55rem}
+.card .meta{
+  display:flex;flex-wrap:wrap;gap:.35rem;
+  font-family:'Lato',sans-serif;font-size:.65rem;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--green-soft);font-weight:600;
+}
+.card .meta .dot{color:var(--gold)}
+.card .arrow{
+  position:absolute;bottom:.75rem;right:.85rem;
+  color:var(--green-soft);font-size:.95rem;transition:transform .14s ease;
+  font-family:'Lato',sans-serif;font-weight:300;
+}
+.card:hover .arrow{transform:translateX(3px);color:var(--green)}
+.card.soon{cursor:default;opacity:.58}
+.card.soon:hover{transform:none;box-shadow:none;border-color:var(--hair)}
+.card.soon .arrow{display:none}
+.card.soon .badge{
+  position:absolute;bottom:.65rem;right:.85rem;
+  font-family:'Lato',sans-serif;
+  font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;
+  background:var(--cream);padding:.18rem .5rem;border:1px solid var(--hair);border-radius:999px;
+}
+
+/* NO RESULTS */
+.no-results{display:none;text-align:center;padding:3rem 1rem;color:var(--muted);font-family:'Lora',serif;font-style:italic;font-size:.95rem}
+
+/* FOOTER */
+footer{border-top:1px solid var(--hair);padding:1.5rem 5vw;text-align:center;color:var(--muted);font-family:'Lato',sans-serif;font-size:.78rem;background:var(--cream)}
+footer .url{color:var(--green);font-weight:600;letter-spacing:.02em;margin-bottom:.3rem}
+footer .legal{font-size:.7rem;color:var(--muted);line-height:1.65}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <a class="mast-link" href="https://goodlandseed.com" aria-label="Good Land Seed Co. main page">
-    <div class="brand">Good Land</div>
-    <div class="divider"></div>
-    <div class="co">Seed Co.</div>
+<nav>
+  <a href="https://goodlandseed.com" class="nav-logo">
+    <img src="https://goodlandseed.com/logo-nav-v5.png" alt="Good Land Seed Co." class="nav-logo-img">
+    Good Land Seed Co.
   </a>
+  <ul class="nav-links">
+    <li><a href="https://goodlandseed.com/#values">Our Seed Promise</a></li>
+    <li class="nav-item-dropdown">
+      <a href="https://goodlandseed.com/education/">Education <svg class="nav-dd-arrow" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"></path></svg></a>
+      <ul class="nav-dropdown">
+        <li><a href="https://goodlandseed.com/education/soil-biology.html">Soil Biology</a></li>
+        <li><a href="https://goodlandseed.com/education/heirloom.html">Heirloom Varieties</a></li>
+        <li><a href="https://goodlandseed.com/education/open-pollinated.html">Open-Pollinated Seed</a></li>
+        <li><a href="https://goodlandseed.com/education/hybrid-corporate.html">Hybrid: The Corporate Cash Cow</a></li>
+        <li><a href="https://goodlandseed.com/education/saving-seed.html">Saving Seed</a></li>
+      </ul>
+    </li>
+    <li><a href="https://goodlandseed.com/#reviews">Reviews</a></li>
+    <li><a href="https://goodlandseed.com/#faq">FAQ</a></li>
+  </ul>
+  <a href="https://goodlandseed.com/#seeds" class="nav-buy">Buy Heirloom Seeds</a>
+  <a href="https://goodlandseedcompany.etsy.com" target="_blank" rel="noopener" class="nav-cta">Shop Our Etsy</a>
+  <div class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
 
-  <div class="lead">
+<div class="page-wrap">
+
+  <div class="page-header">
     <h1>Growing Guides</h1>
-    <p>Pick the variety on your seed packet to open its full guide — customized to your USDA hardiness zone.</p>
-    <a class="shop-button" href="https://goodlandseed.com/#seeds">Shop Heirloom Seeds</a>
+    <p>Pick the variety from your seed packet to open its full guide.</p>
   </div>
 
-  <!-- TOMATOES -->
-  <section class="group">
-    <div class="group-head">Tomatoes <span class="count">5 varieties</span></div>
+  <div class="search-wrap">
+    <div class="search-inner">
+      <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" class="search-input" id="search" placeholder="Search varieties..." autocomplete="off" spellcheck="false">
+    </div>
+  </div>
 
-    <a class="card" href="cherokee-purple.html">
-      <div class="name">Cherokee Purple</div>
-      <div class="latin">Solanum lycopersicum</div>
-      <p class="desc">Tennessee heirloom slicer, dusky purple-pink with green shoulders. Dense, sweet, complex flavor — frequently named the best-tasting tomato in the world. Indeterminate.</p>
-      <div class="meta"><span>75–85 days</span><span class="dot">·</span><span>Slicer</span><span class="dot">·</span><span>Full sun</span></div>
-      <span class="arrow">›</span>
-    </a>
+  <div class="cat-tabs">
+    <button class="cat-tab active" data-cat="all">All</button>
+    <button class="cat-tab" data-cat="tomatoes">Tomatoes</button>
+    <button class="cat-tab" data-cat="flowers">Flowers</button>
+    <button class="cat-tab" data-cat="vegetables">Vegetables</button>
+    <button class="cat-tab" data-cat="herbs">Herbs</button>
+  </div>
 
-    <a class="card" href="brandywine.html">
-      <div class="name">Brandywine</div>
-      <div class="latin">Solanum lycopersicum · Sudduth Strain</div>
-      <p class="desc">1880s Pennsylvania Amish heirloom. Massive 1–2 lb pink beefsteaks on potato-leaf plants. Low yield, legendary flavor. Indeterminate.</p>
-      <div class="meta"><span>80–90 days</span><span class="dot">·</span><span>Beefsteak</span><span class="dot">·</span><span>Full sun</span></div>
-      <span class="arrow">›</span>
-    </a>
+  <div class="guides-section">
 
-    <div class="card soon">
-      <div class="name">Black Krim</div>
-      <div class="latin">Solanum lycopersicum</div>
-      <p class="desc">Crimean heirloom with deep mahogany-brown shoulders and rich, slightly salty flavor. One of the original "black" tomatoes. Indeterminate.</p>
-      <div class="meta"><span>75–80 days</span><span class="dot">·</span><span>Slicer</span><span class="dot">·</span><span>Full sun</span></div>
-      <span class="badge">Guide coming soon</span>
+    <!-- TOMATOES -->
+    <div class="cat-group" id="group-tomatoes">
+      <div class="cat-label">Tomatoes <span class="cat-count">5 varieties</span></div>
+      <div class="cards-grid">
+
+        <a class="card" href="cherokee-purple.html" data-cat="tomatoes" data-search="cherokee purple solanum lycopersicum slicer tennessee heirloom">
+          <div class="name">Cherokee Purple</div>
+          <div class="latin">Solanum lycopersicum</div>
+          <div class="meta"><span>75-85 days</span><span class="dot">·</span><span>Slicer</span><span class="dot">·</span><span>Full sun</span></div>
+          <span class="arrow">›</span>
+        </a>
+
+        <a class="card" href="brandywine.html" data-cat="tomatoes" data-search="brandywine solanum lycopersicum sudduth beefsteak amish pennsylvania">
+          <div class="name">Brandywine</div>
+          <div class="latin">Solanum lycopersicum · Sudduth Strain</div>
+          <div class="meta"><span>80-90 days</span><span class="dot">·</span><span>Beefsteak</span><span class="dot">·</span><span>Full sun</span></div>
+          <span class="arrow">›</span>
+        </a>
+
+        <div class="card soon" data-cat="tomatoes" data-search="black krim solanum lycopersicum slicer crimean mahogany">
+          <div class="name">Black Krim</div>
+          <div class="latin">Solanum lycopersicum</div>
+          <div class="meta"><span>75-80 days</span><span class="dot">·</span><span>Slicer</span><span class="dot">·</span><span>Full sun</span></div>
+          <span class="badge">Guide coming soon</span>
+        </div>
+
+        <a class="card" href="green-zebra.html" data-cat="tomatoes" data-search="green zebra solanum lycopersicum salad striped chartreuse citrusy">
+          <div class="name">Green Zebra</div>
+          <div class="latin">Solanum lycopersicum</div>
+          <div class="meta"><span>70-85 days</span><span class="dot">·</span><span>Salad</span><span class="dot">·</span><span>Full sun</span></div>
+          <span class="arrow">›</span>
+        </a>
+
+        <a class="card" href="san-marzano-ii.html" data-cat="tomatoes" data-search="san marzano ii solanum lycopersicum paste italian sauce roma">
+          <div class="name">San Marzano II</div>
+          <div class="latin">Solanum lycopersicum</div>
+          <div class="meta"><span>75-80 days</span><span class="dot">·</span><span>Paste</span><span class="dot">·</span><span>Full sun</span></div>
+          <span class="arrow">›</span>
+        </a>
+
+      </div>
     </div>
 
-    <a class="card" href="green-zebra.html">
-      <div class="name">Green Zebra</div>
-      <div class="latin">Solanum lycopersicum</div>
-      <p class="desc">Tom Wagner selection from the 1980s. Chartreuse-and-emerald-striped fruit ripens to gold-and-green. Bright, citrusy, tangy flavor. Indeterminate.</p>
-      <div class="meta"><span>70–85 days</span><span class="dot">·</span><span>Salad</span><span class="dot">·</span><span>Full sun</span></div>
-      <span class="arrow">›</span>
-    </a>
+    <!-- FLOWERS -->
+    <div class="cat-group" id="group-flowers">
+      <div class="cat-label">Flowers <span class="cat-count">2 varieties</span></div>
+      <div class="cards-grid">
 
-    <a class="card" href="san-marzano-ii.html">
-      <div class="name">San Marzano II</div>
-      <div class="latin">Solanum lycopersicum</div>
-      <p class="desc">Improved selection of the legendary Italian paste tomato. Thick walls, low water, low seed — the canonical sauce variety. Indeterminate.</p>
-      <div class="meta"><span>75–80 days</span><span class="dot">·</span><span>Paste</span><span class="dot">·</span><span>Full sun</span></div>
-      <span class="arrow">›</span>
-    </a>
-  </section>
+        <a class="card" href="hungarian-breadseed-poppy.html" data-cat="flowers" data-search="hungarian breadseed poppy papaver somniferum annual lavender culinary seed">
+          <div class="name">Hungarian Breadseed Poppy</div>
+          <div class="latin">Papaver somniferum</div>
+          <div class="meta"><span>90-100 days</span><span class="dot">·</span><span>Annual</span><span class="dot">·</span><span>Surface sow</span></div>
+          <span class="arrow">›</span>
+        </a>
 
-  <!-- BEANS -->
-  <section class="group">
-    <div class="group-head">Beans <span class="count">2 varieties</span></div>
+        <a class="card" href="alpha-calendula.html" data-cat="flowers" data-search="alpha calendula officinalis medicinal edible orange annual high-resin">
+          <div class="name">Alpha Calendula</div>
+          <div class="latin">Calendula officinalis 'Alpha'</div>
+          <div class="meta"><span>45-60 days</span><span class="dot">·</span><span>Annual</span><span class="dot">·</span><span>Edible/Medicinal</span></div>
+          <span class="arrow">›</span>
+        </a>
 
-    <div class="card soon">
-      <div class="name">Dragon Tongue</div>
-      <div class="latin">Phaseolus vulgaris</div>
-      <p class="desc">Dutch heirloom bush bean. Buttery yellow pods striped purple, eaten as snap beans when young or shelled as dry beans at maturity. Tender, sweet, prolific.</p>
-      <div class="meta"><span>55–60 days</span><span class="dot">·</span><span>Bush</span><span class="dot">·</span><span>Direct seed</span></div>
-      <span class="badge">Guide coming soon</span>
+      </div>
     </div>
 
-    <div class="card soon">
-      <div class="name">Scarlet Runner</div>
-      <div class="latin">Phaseolus coccineus</div>
-      <p class="desc">Climbing bean with ornamental scarlet flowers and large dappled seeds. Edible as green beans, shell beans, or dried. Hummingbird and pollinator magnet.</p>
-      <div class="meta"><span>60–70 days</span><span class="dot">·</span><span>Pole</span><span class="dot">·</span><span>Direct seed</span></div>
-      <span class="badge">Guide coming soon</span>
+    <!-- VEGETABLES -->
+    <div class="cat-group" id="group-vegetables">
+      <div class="cat-label">Vegetables <span class="cat-count">2 varieties</span></div>
+      <div class="cards-grid">
+
+        <div class="card soon" data-cat="vegetables" data-search="dragon tongue phaseolus vulgaris bean bush dutch yellow purple pods">
+          <div class="name">Dragon Tongue</div>
+          <div class="latin">Phaseolus vulgaris</div>
+          <div class="meta"><span>55-60 days</span><span class="dot">·</span><span>Bush bean</span><span class="dot">·</span><span>Direct seed</span></div>
+          <span class="badge">Guide coming soon</span>
+        </div>
+
+        <div class="card soon" data-cat="vegetables" data-search="scarlet runner phaseolus coccineus pole bean climbing ornamental hummingbird">
+          <div class="name">Scarlet Runner</div>
+          <div class="latin">Phaseolus coccineus</div>
+          <div class="meta"><span>60-70 days</span><span class="dot">·</span><span>Pole bean</span><span class="dot">·</span><span>Direct seed</span></div>
+          <span class="badge">Guide coming soon</span>
+        </div>
+
+      </div>
     </div>
-  </section>
 
-  <!-- HERBS -->
-  <section class="group">
-    <div class="group-head">Herbs <span class="count">1 variety</span></div>
+    <!-- HERBS -->
+    <div class="cat-group" id="group-herbs">
+      <div class="cat-label">Herbs <span class="cat-count">1 variety</span></div>
+      <div class="cards-grid">
 
-    <div class="card soon">
-      <div class="name">Borage</div>
-      <div class="latin">Borago officinalis</div>
-      <p class="desc">Annual with edible cucumber-flavored leaves and brilliant blue star flowers. One of the best bee plants you can grow. Self-seeds reliably.</p>
-      <div class="meta"><span>50–70 days</span><span class="dot">·</span><span>Perennial</span><span class="dot">·</span><span>Pollinator</span></div>
-      <span class="badge">Guide coming soon</span>
+        <div class="card soon" data-cat="herbs" data-search="borage borago officinalis herb annual bee pollinator edible blue flowers">
+          <div class="name">Borage</div>
+          <div class="latin">Borago officinalis</div>
+          <div class="meta"><span>50-70 days</span><span class="dot">·</span><span>Annual herb</span><span class="dot">·</span><span>Pollinator</span></div>
+          <span class="badge">Guide coming soon</span>
+        </div>
+
+      </div>
     </div>
-  </section>
 
-  <!-- FLOWERS -->
-  <section class="group">
-    <div class="group-head">Flowers <span class="count">2 varieties</span></div>
+    <div class="no-results" id="no-results">No varieties match your search.</div>
 
-    <a class="card" href="hungarian-breadseed-poppy.html">
-      <div class="name">Hungarian Breadseed Poppy</div>
-      <div class="latin">Papaver somniferum</div>
-      <p class="desc">Central European heirloom grown for its large seed pods packed with slate-blue culinary seed. The same "blue poppyseed" used in traditional breads and pastries, fresher and more flavorful home-grown. Striking lavender-purple blooms on 3 to 4-foot plants.</p>
-      <div class="meta"><span>90–100 days</span><span class="dot">·</span><span>Annual</span><span class="dot">·</span><span>Surface sow</span></div>
-      <span class="arrow">›</span>
-    </a>
-
-    <a class="card" href="alpha-calendula.html">
-      <div class="name">Alpha Calendula</div>
-      <div class="latin">Calendula officinalis 'Alpha'</div>
-      <p class="desc">High-resin selection bred for the medicinal flower trade. Bright orange singles on bushy plants. Pinch a flower and your fingers come back tacky.</p>
-      <div class="meta"><span>45–60 days</span><span class="dot">·</span><span>Annual</span><span class="dot">·</span><span>Edible/Medicinal</span></div>
-      <span class="arrow">›</span>
-    </a>
-
-  </section>
+  </div>
 
   <footer>
     <div class="url">goodlandseed.com</div>
     <div class="legal">
-      Good Land Seed Co. LLC · 14411 N Presidio Loop · Nampa, ID 83651<br>
-      Open-pollinated · Heirloom · Idaho-grown
+      Good Land Seed Co. LLC &middot; 14411 N Presidio Loop &middot; Nampa, ID 83651<br>
+      Open-pollinated &middot; Heirloom &middot; Idaho-grown
     </div>
   </footer>
 
 </div>
+
+<script>
+var searchEl = document.getElementById('search');
+var groups = document.querySelectorAll('.cat-group');
+var tabs = document.querySelectorAll('.cat-tab');
+var noResults = document.getElementById('no-results');
+var activeCat = 'all';
+
+function filter() {
+  var q = searchEl.value.toLowerCase().trim();
+  var totalVisible = 0;
+
+  groups.forEach(function(group) {
+    var groupCat = group.id.replace('group-', '');
+    var showGroup = activeCat === 'all' || activeCat === groupCat;
+    var groupVisible = 0;
+
+    group.querySelectorAll('.card').forEach(function(card) {
+      var text = (card.dataset.search || '').toLowerCase();
+      var matchSearch = !q || text.indexOf(q) >= 0;
+      var matchCat = showGroup;
+      if (matchSearch && matchCat) {
+        card.style.display = '';
+        groupVisible++;
+        totalVisible++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    group.style.display = groupVisible > 0 ? '' : 'none';
+  });
+
+  noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+}
+
+searchEl.addEventListener('input', filter);
+
+tabs.forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    tabs.forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+    activeCat = tab.dataset.cat;
+    filter();
+  });
+});
+</script>
 </body>
 </html>

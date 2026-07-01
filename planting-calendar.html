@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planting Calendar — Good Land Seed Co.</title>
+<title>Planting Calendar | Good Land Seed Co.</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -97,7 +97,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#888;}
 <div class="wrap">
   <div class="controls">
     <label>Jump to:
-      <select id="jumpMonth"><option value="">— Month —</option></select>
+      <select id="jumpMonth"><option value="">Select Month</option></select>
     </label>
     <label>Search:
       <input type="text" id="search" placeholder="name or botanical...">
@@ -171,7 +171,7 @@ footer{text-align:center;padding:24px;font-size:.8rem;color:#888;}
   </div>
 </div>
 
-<footer>🌱 Good Land Seed Co. — Grow good. Live well.</footer>
+<footer>🌱 Good Land Seed Co. - Grow good. Live well.</footer>
 
 <script>
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -273,18 +273,18 @@ function render(){
       </div>
       <div class="detail" id="d${idx}">
         <div class="detail-grid">
-          <div><b>Botanical</b>${s.botanical||'—'}</div>
-          <div><b>Depth</b>${s.depth||'—'}</div>
-          <div><b>Spacing</b>${s.spacing||'—'}</div>
-          <div><b>Germination</b>${s.germ||'—'}</div>
-          <div><b>Days to Harvest</b>${s.days||'—'}</div>
-          <div><b>Sun</b>${s.sun||'—'}</div>
+          <div><b>Botanical</b>${s.botanical||'-'}</div>
+          <div><b>Depth</b>${s.depth||'-'}</div>
+          <div><b>Spacing</b>${s.spacing||'-'}</div>
+          <div><b>Germination</b>${s.germ||'-'}</div>
+          <div><b>Days to Harvest</b>${s.days||'-'}</div>
+          <div><b>Sun</b>${s.sun||'-'}</div>
           ${s.indoor?`<div><b>Indoor Start</b>${s.indoor}</div>`:''}
-          <div><b>Sow/Transplant</b>${s.sow||'—'}</div>
-          <div><b>Harvest</b>${s.harvest||'—'}</div>
+          <div><b>Sow/Transplant</b>${s.sow||'-'}</div>
+          <div><b>Harvest</b>${s.harvest||'-'}</div>
         </div>
-        <div class="tips"><b>Tips:</b> ${s.tips||'—'}</div>
-        <div class="tips"><b>Companions:</b> ${s.companions||'—'}</div>
+        <div class="tips"><b>Tips:</b> ${s.tips||'-'}</div>
+        <div class="tips"><b>Companions:</b> ${s.companions||'-'}</div>
         ${isCustom?`<button class="del-btn" onclick="delVariety(event,${idx-DEFAULT.length})">🗑 Delete</button>`:''}
       </div>`;
     container.appendChild(row);
